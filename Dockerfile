@@ -16,6 +16,7 @@ WORKDIR /home/developer
 RUN cd ~ && \
     wget -nv -O dlib.tar.bz2 http://dlib.net/files/dlib-19.4.tar.bz2 && \
     tar xf dlib.tar.bz2 && \
+    cd dlib-19.4 && \
     cp -R dlib /usr/local/include
 
 # Download OpenCV
@@ -45,12 +46,6 @@ RUN cd openbr && \
     cmake -DCMAKE_BUILD_TYPE=Release .. && \
     make -j4 && \
     make install
-
-# Download DLIB
-RUN cd ~ && \
-    wget -nv -O dlib.tar.bz2 http://dlib.net/files/dlib-19.4.tar.bz2 && \
-    tar xf dlib.tar.bz2 && \
-    cp -R dlib /usr/local/include
 
 # Clean up
 RUN apt-get remove --purge -y wget unzip
