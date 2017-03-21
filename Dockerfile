@@ -12,6 +12,12 @@ RUN mkdir -p /home/developer
 ENV HOME /home/developer
 WORKDIR /home/developer
 
+# Download DLIB
+RUN cd ~ && \
+    wget -nv -O dlib.tar.bz2 http://dlib.net/files/dlib-19.4.tar.bz2 && \
+    tar xf dlib.tar.bz2 && \
+    cp -R dlib /usr/local/include
+
 # Download OpenCV
 RUN wget -nv -O opencv-2.4.13.zip https://github.com/Itseez/opencv/archive/2.4.13.zip && \
     unzip -q opencv-2.4.13.zip
@@ -42,9 +48,7 @@ RUN cd openbr && \
 
 # Download DLIB
 RUN cd ~ && \
-    curl -L \
-         http://dlib.net/files/dlib-19.4.tar.bz2 \
-         -o dlib.tar.bz2 && \
+    wget -nv -O dlib.tar.bz2 http://dlib.net/files/dlib-19.4.tar.bz2 && \
     tar xf dlib.tar.bz2 && \
     cp -R dlib /usr/local/include
 
