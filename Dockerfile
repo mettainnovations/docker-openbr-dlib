@@ -5,7 +5,7 @@ FROM ubuntu:latest
 
 # Install dependencies
 RUN apt-get update -y && \
-    apt-get install -y build-essential cmake cmake-curses-gui wget unzip git libboost-all-dev qt5-default libqt5svg5-dev qtcreator && \
+    apt-get install -y build-essential cmake cmake-curses-gui wget unzip git libavcodec-dev libboost-all-dev qt5-default libqt5svg5-dev qtcreator && \
     apt-get clean -y
 
 RUN mkdir -p /home/developer
@@ -27,7 +27,7 @@ RUN wget -nv -O opencv-2.4.13.zip https://github.com/Itseez/opencv/archive/2.4.1
 RUN cd opencv-2.4.13 && \
     mkdir build && \
     cd build && \
-    cmake -DCMAKE_BUILD_TYPE=Release .. && \
+    cmake -DCMAKE_BUILD_TYPE=Release -DWITH_QT=YES .. && \
     make -j4 && \
     make install && \
     cd ../.. && \
