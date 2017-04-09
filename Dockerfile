@@ -1,4 +1,4 @@
-FROM mettainnovations:latest
+FROM mettainnovations/openbr-dlib:latest
 
 USER root
 
