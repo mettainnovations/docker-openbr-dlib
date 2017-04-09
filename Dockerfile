@@ -59,4 +59,11 @@ RUN export uid=1000 gid=1000 && \
     chmod 0440 /etc/sudoers.d/developer && \
     chown ${uid}:${gid} -R /home/developer && \
     adduser developer video
+
+# Install nvidia driver
+RUN  apt install module-init-tools libcpprest-dev && \
+     wget http://us.download.nvidia.com/XFree86/Linux-x86_64/375.39/NVIDIA-Linux-x86_64-375.39.run && \
+     sh NVIDIA-Linux-x86_64-375.39.run -a -N --ui=none --no-kernel-module \
+     rm -rf NVIDIA-Linux-*
+
 USER developer
