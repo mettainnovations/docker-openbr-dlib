@@ -5,7 +5,7 @@ FROM ubuntu:latest
 
 # Install dependencies
 RUN apt-get update -y && \
-    apt-get install -y build-essential cmake cmake-curses-gui wget unzip git libavcodec-dev libboost-all-dev qt5-default libqt5svg5-dev qtcreator libcpprest-dev && \
+    apt-get install -y build-essential cmake cmake-curses-gui wget unzip git libavcodec-dev libboost-all-dev qt5-default libqt5svg5-dev qtcreator && \
     apt-get clean -y
 
 RUN mkdir -p /home/developer
@@ -60,3 +60,6 @@ RUN export uid=1000 gid=1000 && \
     chown ${uid}:${gid} -R /home/developer && \
     adduser developer video
 USER developer
+
+# Casa Blanca
+RUN apt-get install -y libcpprest-dev
