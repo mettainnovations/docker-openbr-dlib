@@ -5,7 +5,7 @@ FROM ubuntu:latest
 
 # Install dependencies
 RUN apt-get update -y && \
-    apt-get install -y build-essential cmake cmake-curses-gui wget unzip git libavcodec-dev libboost-all-dev qt5-default libqt5svg5-dev qtcreator && \
+    apt-get install -y build-essential cmake cmake-curses-gui wget unzip git libavcodec-dev libboost-all-dev qt5-default libqt5svg5-dev qtcreator libcpprest-dev && \
     apt-get clean -y
 
 RUN mkdir -p /home/developer
