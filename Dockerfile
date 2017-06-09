@@ -50,6 +50,9 @@ RUN cd ~ && \
 # Clean up
 RUN apt-get remove --purge -y wget unzip
 
+# Casa Blanca
+RUN apt-get install -y libcpprest-dev
+
 # Replace 1000 with your user / group id
 RUN export uid=1000 gid=1000 && \
     echo "developer:x:${uid}:${gid}:Developer,,,:/home/developer:/bin/bash" >> /etc/passwd && \
