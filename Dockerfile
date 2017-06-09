@@ -5,19 +5,12 @@ FROM ubuntu:latest
 
 # Install dependencies
 RUN apt-get update -y && \
-    apt-get install -y build-essential cmake cmake-curses-gui wget unzip git libavcodec-dev libboost-all-dev qt5-default libqt5svg5-dev qtcreator && \
+    apt-get install -y build-essential cmake cmake-curses-gui wget unzip git libavcodec-dev libavutil-dev libavutil-ffmpeg54 libavformat-dev libjpeg8-dev libpng16-dev libtiff5-dev libx264-dev libgstreamer1.0-dev libboost-all-dev qt5-default libqt5svg5-dev qtcreator && \
     apt-get clean -y
 
 RUN mkdir -p /home/developer
 ENV HOME /home/developer
 WORKDIR /home/developer
-
-# Download DLIB
-RUN cd ~ && \
-    wget -nv -O dlib.tar.bz2 http://dlib.net/files/dlib-19.4.tar.bz2 && \
-    tar xf dlib.tar.bz2 && \
-    cd dlib-19.4 && \
-    cp -R dlib /usr/local/include
 
 # Download OpenCV
 RUN wget -nv -O opencv-2.4.13.zip https://github.com/Itseez/opencv/archive/2.4.13.zip && \
@@ -27,7 +20,7 @@ RUN wget -nv -O opencv-2.4.13.zip https://github.com/Itseez/opencv/archive/2.4.1
 RUN cd opencv-2.4.13 && \
     mkdir build && \
     cd build && \
-    cmake -DCMAKE_BUILD_TYPE=Release -DWITH_QT=YES .. && \
+    cmake -DCMAKE_BUILD_TYPE=Release -DWITH_QT=YES -DWITH_OPENMP=YES .. && \
     make -j4 && \
     make install && \
     cd ../.. && \
@@ -46,6 +39,13 @@ RUN cd openbr && \
     cmake -DCMAKE_BUILD_TYPE=Release .. && \
     make -j4 && \
     make install
+
+# Download DLIB
+RUN cd ~ && \
+    wget -nv -O dlib.tar.bz2 http://dlib.net/files/dlib-19.4.tar.bz2 && \
+    tar xf dlib.tar.bz2 && \
+    cd dlib-19.4 && \
+    cp -R dlib /usr/local/include
 
 # Clean up
 RUN apt-get remove --purge -y wget unzip
