@@ -36,7 +36,7 @@ RUN git clone https://github.com/biometrics/openbr.git && \
 # Build OpenBR
 RUN cd openbr && \
     mkdir build &&  cd build && \
-    cmake -DCMAKE_BUILD_TYPE=Release .. && \
+    cmake -DCMAKE_BUILD_TYPE=Release -DBR_WITH_OPENCV_NONFREE=OFF .. && \
     make -j4 && \
     make install
 
