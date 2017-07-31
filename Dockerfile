@@ -42,10 +42,18 @@ RUN cd openbr && \
 
 # Download DLIB
 RUN cd ~ && \
+    apt-get -y install libopenblas-dev liblapack-dev && \
     wget -nv -O dlib.tar.bz2 http://dlib.net/files/dlib-19.4.tar.bz2 && \
     tar xf dlib.tar.bz2 && \
     cd dlib-19.4 && \
     cp -R dlib /usr/local/include
+
+# Build DLIB
+RUN cd openbr && \
+    mkdir build &&  cd build && \
+    cmake -DCMAKE_BUILD_TYPE=Release -DBR_WITH_OPENCV_NONFREE=OFF .. && \
+    make -j4 && \
+    make install
 
 # Clean up
 RUN apt-get remove --purge -y wget unzip
