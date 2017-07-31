@@ -1,7 +1,4 @@
-FROM ubuntu:latest
-
-# Use mirror(JAIST) for apt-get
-# RUN sed -i'~' -E "s@http://(..\.)?(archive|security)\.ubuntu\.com/ubuntu@http://ftp.jaist.ac.jp/pub/Linux/ubuntu@g" /etc/apt/sources.list
+FROM nvidia/cuda:8.0-cudnn5-devel
 
 # Install dependencies
 RUN apt-get update -y && \
@@ -20,7 +17,7 @@ RUN wget -nv -O opencv-2.4.13.zip https://github.com/Itseez/opencv/archive/2.4.1
 RUN cd opencv-2.4.13 && \
     mkdir build && \
     cd build && \
-    cmake -DCMAKE_BUILD_TYPE=Release -DWITH_QT=YES -DWITH_OPENMP=YES .. && \
+    cmake -DCMAKE_BUILD_TYPE=Release -DWITH_QT=YES -DWITH_OPENMP=YES -DWITH_CUDA=YES .. && \
     make -j4 && \
     make install && \
     cd ../.. && \
@@ -36,7 +33,7 @@ RUN git clone https://github.com/biometrics/openbr.git && \
 # Build OpenBR
 RUN cd openbr && \
     mkdir build &&  cd build && \
-    cmake -DCMAKE_BUILD_TYPE=Release -DBR_WITH_OPENCV_NONFREE=OFF .. && \
+    cmake -DCMAKE_BUILD_TYPE=Release -DBR_WITH_OPENCV_NONFREE=OFF -DCUDA_USE_STATIC_CUDA_RUNTIME=OFF .. && \
     make -j4 && \
     make install
 
@@ -49,11 +46,10 @@ RUN cd ~ && \
     cp -R dlib /usr/local/include
 
 # Build DLIB
-RUN cd openbr && \
+RUN cd ~/dlib-19.4 && \
     mkdir build &&  cd build && \
-    cmake -DCMAKE_BUILD_TYPE=Release -DBR_WITH_OPENCV_NONFREE=OFF .. && \
-    make -j4 && \
-    make install
+    cmake -DDLIB_USE_CUDA=1 -DDLIB_USE_BLAS=1 -DDLIB_PNG_SUPPORT=1 -DDLIB_JPEG_SUPPORT=1 -DUSE_AVX_INSTRUCTION=1 .. && \
+    make -j4
 
 # Clean up
 RUN apt-get remove --purge -y wget unzip
