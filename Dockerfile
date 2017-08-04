@@ -49,11 +49,10 @@ RUN cd ~ && \
     cp -R dlib /usr/local/include
 
 # Build DLIB
-RUN cd openbr && \
+RUN cd ~/dlib-19.4 && \
     mkdir build &&  cd build && \
-    cmake -DCMAKE_BUILD_TYPE=Release -DBR_WITH_OPENCV_NONFREE=OFF .. && \
-    make -j4 && \
-    make install
+    cmake -DDLIB_USE_CUDA=1 -DDLIB_USE_BLAS=1 -DDLIB_PNG_SUPPORT=1 -DDLIB_JPEG_SUPPORT=1 -DUSE_AVX_INSTRUCTION=1 .. && \
+    make -j4
 
 # Clean up
 RUN apt-get remove --purge -y wget unzip
