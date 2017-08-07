@@ -17,7 +17,7 @@ RUN wget -nv -O opencv-2.4.13.zip https://github.com/Itseez/opencv/archive/2.4.1
 RUN cd opencv-2.4.13 && \
     mkdir build && \
     cd build && \
-    cmake -DCMAKE_BUILD_TYPE=Release -DWITH_QT=YES -DWITH_OPENMP=YES -DWITH_CUDA=YES -DCMAKE_CXX_FLAGS="-Wno-deprecated-declarations" -DCUDA_ARCH_BIN="30 35 50" .. && \
+    cmake -DCMAKE_BUILD_TYPE=Release -DWITH_QT=YES -DWITH_OPENMP=YES -DWITH_CUDA=YES -DCMAKE_CXX_FLAGS="-Wno-deprecated-declarations" -DCUDA_ARCH_BIN="30 35" .. && \
     make -j4 && \
     make install && \
     cd ../.. && \
